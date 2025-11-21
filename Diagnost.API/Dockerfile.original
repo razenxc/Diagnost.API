@@ -13,8 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Diagnost.API/Diagnost.API.csproj", "Diagnost.API/"]
-COPY ["Diagnost.Domain/Diagnost.Domain.csproj", "Diagnost.Domain/"]
-COPY ["Diagnost.Infrastructure/Diagnost.Infrastructure.csproj", "Diagnost.Infrastructure/"]
 RUN dotnet restore "./Diagnost.API/Diagnost.API.csproj"
 COPY . .
 WORKDIR "/src/Diagnost.API"

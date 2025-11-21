@@ -1,3 +1,8 @@
 <Solution>
   <Project Path="Diagnost.API/Diagnost.API.csproj" />
+  <Project Path="Diagnost.Domain/Diagnost.Domain.csproj" />
+  <Project Path="Diagnost.Infrastructure/Diagnost.Infrastructure.csproj" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>
