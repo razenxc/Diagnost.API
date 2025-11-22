@@ -57,6 +57,8 @@ namespace Diagnost.Infrastructure
                       .HasForeignKey(e => e.SessionId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
+
+            // Note: do not perform user manager operations here to avoid DI circular dependency.
         }
     }
 }
