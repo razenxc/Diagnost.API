@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path=".env" />
+    <File Path="example.env" />
   </Folder>
   <Project Path="Diagnost.API/Diagnost.API.csproj" />
   <Project Path="Diagnost.Domain/Diagnost.Domain.csproj" />
