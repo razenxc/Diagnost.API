@@ -7,7 +7,7 @@ namespace Diagnost.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,7 @@ namespace Diagnost.API
             builder.Services.AddAuthorization();
 
             builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.Configure<BearerTokenOptions>(IdentityConstants.BearerScheme, options =>
@@ -36,6 +37,7 @@ namespace Diagnost.API
             {
                 using (var scope = app.Services.CreateScope())
                 {
+                    IServiceProvider services = scope.ServiceProvider;
                     ApplicationDbContext? db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
                     const int maxAttempts = 30;
@@ -53,6 +55,7 @@ namespace Diagnost.API
                                 connected = true;
                                 db.Database.Migrate();
                                 Console.WriteLine("Database connected and migrations applied.");
+                                await DbInit.InitializeAsync(services);
                                 break;
                             }
                         }
@@ -89,7 +92,7 @@ namespace Diagnost.API
             {
                 app.UseHttpsRedirection();
             }
-
+            
             app.UseAuthorization();
 
             app.MapControllers();

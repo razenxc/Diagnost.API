@@ -48,9 +48,9 @@ namespace Diagnost.Infrastructure
                 entity.ToTable("Results");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.StudentName).IsRequired().HasMaxLength(300);
-                entity.Property(e => e.AverageTime).IsRequired();
-                entity.Property(e => e.ErrorsCount).IsRequired();
-                entity.Property(e => e.RawDataJson).HasColumnType("text");
+                entity.Property(e => e.SuccessfullClicks).IsRequired();
+                entity.Property(e => e.Errors).IsRequired();
+                entity.Property(e => e.AverageLatency).IsRequired();
                 entity.Property(e => e.SubmittedAt).IsRequired();
                 entity.HasOne(e => e.Session)
                       .WithMany()
