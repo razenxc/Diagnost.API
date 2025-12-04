@@ -1,4 +1,6 @@
+using Diagnost.Domain;
 using Diagnost.Infrastructure;
+using Diagnost.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,10 +27,23 @@ namespace Diagnost.API
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+                options.User.RequireUniqueEmail = false;
+            });
+
             builder.Services.Configure<BearerTokenOptions>(IdentityConstants.BearerScheme, options =>
             {
                 options.BearerTokenExpiration = TimeSpan.FromDays(30);
             });
+            
+            builder.Services.AddScoped<IAccessCodeService, AccessCodeService>();
 
             WebApplication? app = builder.Build();
 

@@ -16,6 +16,6 @@ namespace Diagnost.Domain.Models
         public DateTime SubmittedAt { get; set; }
 
         // Navigation property
-        public Session? Session { get; set; }
+        public AccessCode? AccessCode { get; set; }
     }
 }

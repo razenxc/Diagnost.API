@@ -9,16 +9,19 @@ namespace Diagnost.Domain.Models
         UFP = 2
     }
 
-    public class Session
+    public class AccessCode
     {
         public Guid Id { get; set; }
-        public Guid TeacherId { get; set; }
         public string Code { get; set; } = string.Empty;
-        public TestType TestType { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        // Navigation property
-        public Teacher? Teacher { get; set; }
+        
+        public AccessCode(Guid id, string code, bool isActive, DateTime createdAt)
+        {
+            Id = id;
+            Code = code;
+            IsActive = isActive;
+            CreatedAt = createdAt;
+        }
     }
 }

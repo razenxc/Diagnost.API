@@ -12,7 +12,7 @@ namespace Diagnost.Infrastructure
         }
 
         public DbSet<Teacher> Teachers { get; set; } = null!;
-        public DbSet<Session> Sessions { get; set; } = null!;
+        public DbSet<AccessCode> AccessCodes { get; set; } = null!;
         public DbSet<Result> Results { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,19 +28,14 @@ namespace Diagnost.Infrastructure
                 entity.Property(e => e.PasswordHash).IsRequired();
             });
 
-            modelBuilder.Entity<Session>(entity =>
+            modelBuilder.Entity<AccessCode>(entity =>
             {
                 entity.ToTable("Sessions");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Code).IsRequired().HasMaxLength(50);
                 entity.HasIndex(e => e.Code).IsUnique();
-                entity.Property(e => e.TestType).IsRequired();
                 entity.Property(e => e.IsActive).IsRequired();
                 entity.Property(e => e.CreatedAt).IsRequired();
-                entity.HasOne(e => e.Teacher)
-                      .WithMany()
-                      .HasForeignKey(e => e.TeacherId)
-                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Result>(entity =>
@@ -52,7 +47,7 @@ namespace Diagnost.Infrastructure
                 entity.Property(e => e.Errors).IsRequired();
                 entity.Property(e => e.AverageLatency).IsRequired();
                 entity.Property(e => e.SubmittedAt).IsRequired();
-                entity.HasOne(e => e.Session)
+                entity.HasOne(e => e.AccessCode)
                       .WithMany()
                       .HasForeignKey(e => e.SessionId)
                       .OnDelete(DeleteBehavior.Cascade);
