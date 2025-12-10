@@ -69,7 +69,7 @@ public class AccessCodeService : IAccessCodeService
     // Read All
     public async Task<(Error, List<AccessCode>?)> GetAsync()
     {
-        List<AccessCode> accessCodes = await _context.AccessCodes.ToListAsync();
+        List<AccessCode> accessCodes;
         try
         {
             accessCodes = await _context.AccessCodes.ToListAsync();
@@ -91,8 +91,21 @@ public class AccessCodeService : IAccessCodeService
     // Read
     public async Task<(Error, AccessCode?)> GetAsync(string accessCode)
     {
-        AccessCode? accesCode = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == accessCode);
-        if (accesCode == null)
+        AccessCode? accessCodeModel;
+
+        try
+        {
+            accessCodeModel = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == accessCode);
+        }
+        catch (Exception)
+        {
+            return (
+                new Error(true, "Помилка під час отримання коду доступу з бази даних!"),
+                null
+                );
+        }
+
+        if (accessCodeModel == null)
         {
             return (
                 new Error(true, "Код доступу не знайдено!"),
@@ -102,14 +115,27 @@ public class AccessCodeService : IAccessCodeService
 
         return (
             new Error(false),
-            accesCode
+            accessCodeModel
             );
     }
     
     // Update
     public async Task<(Error, AccessCode?)> Revoke(string code)
     {
-        AccessCode? accessCode = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code);
+        AccessCode? accessCode;
+
+        try
+        {
+            accessCode = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code);
+        }
+        catch (Exception)
+        {
+            return (
+                new Error(true, "Помилка під час отримання коду доступу з бази даних!"),
+                null
+                );
+        }
+
         if (accessCode == null)
         {
             return (
@@ -141,7 +167,20 @@ public class AccessCodeService : IAccessCodeService
     // Delete
     public async Task<(Error, AccessCode?)> DeleteAsync(string code)
     {
-        AccessCode? accessCode = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code);
+        AccessCode? accessCode;
+
+        try
+        {
+            accessCode = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code);
+        }
+        catch (Exception)
+        {
+            return (
+                new Error(true, "Помилка під час отримання коду доступу з бази даних!"),
+                null
+                );
+        }
+
         if (accessCode == null)
         {
             return (
