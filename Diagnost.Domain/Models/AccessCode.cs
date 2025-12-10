@@ -2,13 +2,6 @@
 
 namespace Diagnost.Domain.Models
 {
-    public enum TestType
-    {
-        PZMR = 0,
-        RV2_3 = 1,
-        UFP = 2
-    }
-
     public class AccessCode
     {
         public Guid Id { get; set; }

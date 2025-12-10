@@ -17,17 +17,18 @@ public class AccessCodeService : IAccessCodeService
     public async Task<(Error, AccessCode?)> CreateAsync()
     {
         Random random = new Random();
-        string? code = null;
+        string code = string.Empty;
         int codeLength = 6;
 
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
         int attempts = 0;
-        while (await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code) != null)
+
+        while (code == string.Empty)
         {
             attempts++;
             code = new string(Enumerable.Repeat(chars, codeLength).Select(x => x[random.Next(x.Length)]).ToArray());
-            if (attempts > 10)
+            if (attempts > 10 || await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code) != null)
             {
                 return (
                     new Error(true, "Помилка під час створення ключа доступу, спробуйте ще раз!"),
@@ -36,7 +37,7 @@ public class AccessCodeService : IAccessCodeService
             }
         }
 
-        if (code == null)
+        if (code == string.Empty)
         {
             return (
                 new Error(true, "Помилка під час створення ключа доступу, спробуйте ще раз"),
@@ -51,9 +52,8 @@ public class AccessCodeService : IAccessCodeService
             await _context.AccessCodes.AddAsync(newAccessCode);
             await _context.SaveChangesAsync();
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine(e);
             return (
                 new Error(true, "Помилка під час запису нового ключа доступу до бази даних!"),
             null
@@ -74,7 +74,7 @@ public class AccessCodeService : IAccessCodeService
         {
             accessCodes = await _context.AccessCodes.ToListAsync();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return (
                 new Error(true, "Помилка під час отримання даних бази даних!"),
@@ -118,12 +118,44 @@ public class AccessCodeService : IAccessCodeService
             );
         }
 
+        accessCode.IsActive = false;
+
         try
         {
-            _context.AccessCodes.Remove(accessCode);
             await _context.SaveChangesAsync();
         }
-        catch (Exception e)
+        catch (Exception)
+        {
+            return (
+                new Error(true, "Виникла помилка під час деактивації коду!"),
+                null
+                );
+        }
+
+        return (
+            new Error(false),
+            accessCode
+            );
+    }
+
+    // Delete
+    public async Task<(Error, AccessCode?)> DeleteAsync(string code)
+    {
+        AccessCode? accessCode = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code);
+        if (accessCode == null)
+        {
+            return (
+                new Error(true, "Код доступу не знайдено!"),
+                null
+            );
+        }
+
+        try
+        {
+            _context.Remove(accessCode);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception)
         {
             return (
                 new Error(true, "Виникла помилка під час видалення коду з бази даних!"),

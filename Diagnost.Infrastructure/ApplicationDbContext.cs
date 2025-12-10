@@ -42,18 +42,42 @@ namespace Diagnost.Infrastructure
             {
                 entity.ToTable("Results");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.StudentName).IsRequired().HasMaxLength(300);
-                entity.Property(e => e.SuccessfullClicks).IsRequired();
-                entity.Property(e => e.Errors).IsRequired();
-                entity.Property(e => e.AverageLatency).IsRequired();
-                entity.Property(e => e.SubmittedAt).IsRequired();
                 entity.HasOne(e => e.AccessCode)
                       .WithMany()
-                      .HasForeignKey(e => e.SessionId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .HasForeignKey(e => e.AccessCodeId)
+                      .OnDelete(DeleteBehavior.Cascade); // If AccessCode is deleted, delete related Results
+                entity.Property(e => e.StudentFullName)
+                      .IsRequired()
+                      .HasMaxLength(150);
+                entity.Property(e => e.Group)
+                      .IsRequired()
+                      .HasMaxLength(50);
+                entity.Property(e => e.SportType)
+                      .HasMaxLength(100);
+                entity.Property(e => e.SportQualification)
+                      .HasMaxLength(100);
+                entity.Property(e => e.Gender)
+                      .HasMaxLength(20);
+                entity.Property(e => e.SubmittedAt)
+                      .IsRequired();
+                entity.Property(e => e.PZMRChtoToTam1).IsRequired();
+                entity.Property(e => e.PZMRSmth2).IsRequired();
+                entity.Property(e => e.PZMR_ErrorsTotal).IsRequired();
+                entity.Property(e => e.PZMR_SuccessfulClicks).IsRequired();
+                entity.Property(e => e.PV2_3Smth1).IsRequired();
+                entity.Property(e => e.PV2_StdDev_ms).IsRequired();
+                entity.Property(e => e.PV2_ErrorsMissed).IsRequired();
+                entity.Property(e => e.PV2_ErrorsWrongButton).IsRequired();
+                entity.Property(e => e.PV2_ErrorsFalseAlarm).IsRequired();
+                entity.Property(e => e.UFPSmth1).IsRequired();
+                entity.Property(e => e.UFP_StdDev_ms).IsRequired();
+                entity.Property(e => e.UFP_MinExposure_ms).IsRequired();
+                entity.Property(e => e.UFP_TotalTime_s).IsRequired();
+                entity.Property(e => e.UFP_TimeTillMinExp_s).IsRequired();
+                entity.Property(e => e.UFP_ErrorsMissed).IsRequired();
+                entity.Property(e => e.UFP_ErrorsWrongButton).IsRequired();
+                entity.Property(e => e.UFP_ErrorsFalseAlarm).IsRequired();
             });
-
-            // Note: do not perform user manager operations here to avoid DI circular dependency.
         }
     }
 }

@@ -1,6 +1,7 @@
 using Diagnost.Domain;
 using Diagnost.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Diagnost.API.Controllers
 {
@@ -14,8 +15,7 @@ namespace Diagnost.API.Controllers
         {
             _accessCode = accessCode;
         }
-        
-        // GET: api/<AccessCodeController>
+
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -27,14 +27,17 @@ namespace Diagnost.API.Controllers
             return Ok(accessCodes);
         }
 
-        // GET api/<AccessCodeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{code}")]
+        public async Task<ActionResult> Get([FromRoute] string code)
         {
-            return "value";
+            (Error error, AccessCode? accessCode) = await _accessCode.GetAsync(code);
+            if (error.IsError)
+            {
+                return BadRequest(error.Message);
+            }
+            return Ok(accessCode);
         }
 
-        // POST api/<AccessCodeController>
         [HttpPost]
         public async Task<ActionResult> Post()
         {
@@ -47,16 +50,26 @@ namespace Diagnost.API.Controllers
             return Ok(accessCode);
         }
 
-        // PUT api/<AccessCodeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{code}")]
+        public async Task<ActionResult> Put([FromRoute] string code)
         {
+            (Error error, AccessCode? accessCode) = await _accessCode.Revoke(code);
+            if (error.IsError)
+            {
+                BadRequest(error.Message);
+            }
+            return Ok(accessCode);
         }
 
-        // DELETE api/<AccessCodeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{code}")]
+        public async Task<ActionResult> Delete([FromRoute] string code)
         {
+            (Error error, AccessCode? accessCode) = await _accessCode.DeleteAsync(code);
+            if (error.IsError)
+            {
+                BadRequest(error.Message);
+            }
+            return Ok(accessCode);
         }
     }
 }
