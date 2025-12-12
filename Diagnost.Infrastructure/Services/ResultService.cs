@@ -26,6 +26,7 @@ namespace Diagnost.Infrastructure.Services
 
             result.SubmittedAt = DateTime.UtcNow;
             result.AccessCodeId = accessCode.Id;
+            result.AccessCode = accessCode;
 
             try
             {
@@ -57,7 +58,9 @@ namespace Diagnost.Infrastructure.Services
                     );
             }
 
-            Result? resultModel = await _context.Results.FirstOrDefaultAsync(x => x.Id == resultId);
+            Result? resultModel = await _context.Results
+                .Include(r => r.AccessCode)
+                .FirstOrDefaultAsync(x => x.Id == resultId);
             if (accessCode == null)
             {
                 return (
@@ -120,7 +123,10 @@ namespace Diagnost.Infrastructure.Services
         // Read All
         public async Task<(Error, List<Result>?)> GetAsync()
         {
-            List<Result> results = await _context.Results.ToListAsync();
+            List<Result> results = await _context.Results
+                .Include(r => r.AccessCode)    
+                .ToListAsync();
+
             return (
                 new Error(false, null),
                 results
@@ -134,7 +140,9 @@ namespace Diagnost.Infrastructure.Services
 
             try
             {
-                result = await _context.Results.FindAsync(id);
+                result = await _context.Results
+                    .Include(r => r.AccessCode)
+                    .FirstOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception)
             {
@@ -165,7 +173,9 @@ namespace Diagnost.Infrastructure.Services
 
             try
             {
-                result = await _context.Results.FindAsync(id);
+                result = await _context.Results
+                    .Include(r => r.AccessCode)
+                    .FirstOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception)
             {

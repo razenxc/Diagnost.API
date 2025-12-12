@@ -30,7 +30,7 @@ namespace Diagnost.API.Controllers
                 return BadRequest(error.Message);
             }
 
-            return Ok(result);
+            return Ok(result.ToResultResponse(result.AccessCode.Code));
         }
 
         // Update PZMR
@@ -42,7 +42,7 @@ namespace Diagnost.API.Controllers
             {
                 return BadRequest(error.Message);
             }
-            return Ok(result);
+            return Ok(result.ToResultResponse(result.AccessCode.Code));
         }
 
         // Update PV2
@@ -54,7 +54,7 @@ namespace Diagnost.API.Controllers
             {
                 return BadRequest(error.Message);
             }
-            return Ok(result);
+            return Ok(result.ToResultResponse(result.AccessCode.Code));
         }
 
         // Update UFP
@@ -66,7 +66,7 @@ namespace Diagnost.API.Controllers
             {
                 return BadRequest(error.Message);
             }
-            return Ok(result);
+            return Ok(result.ToResultResponse(result.AccessCode.Code));
         }
 
         // Read All
@@ -78,7 +78,7 @@ namespace Diagnost.API.Controllers
             {
                 return BadRequest(error.Message);
             }
-            return Ok(results);
+            return Ok(results.Select(x => x.ToResultResponse(x.AccessCode.Code)));
         }
 
         // Read
@@ -90,7 +90,7 @@ namespace Diagnost.API.Controllers
             {
                 return BadRequest(error.Message);
             }
-            return Ok(result);
+            return Ok(result.ToResultResponse(result.AccessCode.Code));
         }
 
         // Delete
@@ -102,7 +102,7 @@ namespace Diagnost.API.Controllers
             {
                 return BadRequest(error.Message);
             }
-            return Ok(result);
+            return Ok(result.ToResultResponse(result.AccessCode.Code));
         }
     }
 }

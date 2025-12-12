@@ -54,5 +54,36 @@ namespace Diagnost.API.Mappers
                 UFP_ErrorsFalseAlarm = r.UFP_ErrorsFalseAlarm,
             };
         }
+
+        public static ResultResponse ToResultResponse(this Result r, string accessCode)
+        {
+            return new ResultResponse(
+                r.Id,
+                accessCode,
+                r.StudentFullName,
+                r.SportType,
+                r.SportQualification,
+                r.Group,
+                r.Gender,
+                r.SubmittedAt,
+                r.PZMRChtoToTam1,
+                r.PZMRSmth2,
+                r.PZMR_ErrorsTotal,
+                r.PZMR_SuccessfulClicks,
+                r.PV2_3Smth1,
+                r.PV2_StdDev_ms,
+                r.PV2_ErrorsMissed,
+                r.PV2_ErrorsWrongButton,
+                r.PV2_ErrorsFalseAlarm,
+                r.UFPSmth1,
+                r.UFP_StdDev_ms,
+                r.UFP_MinExposure_ms,
+                r.UFP_TotalTime_s,
+                r.UFP_TimeTillMinExp_s,
+                r.UFP_ErrorsMissed,
+                r.UFP_ErrorsWrongButton,
+                r.UFP_ErrorsFalseAlarm
+                );
+        }
     }
 }
