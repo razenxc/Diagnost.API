@@ -16,28 +16,7 @@ namespace Diagnost.API.Controllers
             _accessCode = accessCode;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Get()
-        {
-            (Error error, List<AccessCode>? accessCodes) = await _accessCode.GetAsync();
-            if (error.IsError)
-            {
-                return BadRequest(error.Message);
-            }
-            return Ok(accessCodes);
-        }
-
-        [HttpGet("{code}")]
-        public async Task<ActionResult> Get([FromRoute] string code)
-        {
-            (Error error, AccessCode? accessCode) = await _accessCode.GetAsync(code);
-            if (error.IsError)
-            {
-                return BadRequest(error.Message);
-            }
-            return Ok(accessCode);
-        }
-
+        // Create
         [HttpPost]
         public async Task<ActionResult> Post()
         {
@@ -50,6 +29,31 @@ namespace Diagnost.API.Controllers
             return Ok(accessCode);
         }
 
+        // Read All
+        [HttpGet]
+        public async Task<ActionResult> Get()
+        {
+            (Error error, List<AccessCode>? accessCodes) = await _accessCode.GetAsync();
+            if (error.IsError)
+            {
+                return BadRequest(error.Message);
+            }
+            return Ok(accessCodes);
+        }
+
+        // Read
+        [HttpGet("{code}")]
+        public async Task<ActionResult> Get([FromRoute] string code)
+        {
+            (Error error, AccessCode? accessCode) = await _accessCode.GetAsync(code);
+            if (error.IsError)
+            {
+                return BadRequest(error.Message);
+            }
+            return Ok(accessCode);
+        }
+
+        // Update
         [HttpPut("{code}")]
         public async Task<ActionResult> Put([FromRoute] string code)
         {
@@ -61,6 +65,7 @@ namespace Diagnost.API.Controllers
             return Ok(accessCode);
         }
 
+        // Delete
         [HttpDelete("{code}")]
         public async Task<ActionResult> Delete([FromRoute] string code)
         {

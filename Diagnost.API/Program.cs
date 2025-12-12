@@ -1,4 +1,5 @@
 using Diagnost.Domain;
+using Diagnost.Domain.Interfaces;
 using Diagnost.Infrastructure;
 using Diagnost.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.BearerToken;
@@ -44,6 +45,7 @@ namespace Diagnost.API
             });
             
             builder.Services.AddScoped<IAccessCodeService, AccessCodeService>();
+            builder.Services.AddScoped<IResultService, ResultService>();
 
             WebApplication? app = builder.Build();
 

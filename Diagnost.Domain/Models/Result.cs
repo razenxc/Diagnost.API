@@ -2,6 +2,13 @@
 
 namespace Diagnost.Domain.Models
 {
+    public enum ResultType
+    {
+        PZMR,
+        PV2,
+        UFP
+    }
+
     public class Result // Change the model later
     {
         public long Id { get; set; } // Using long to simplify user interactions.

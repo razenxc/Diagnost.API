@@ -11,22 +11,12 @@ namespace Diagnost.Infrastructure
         {
         }
 
-        public DbSet<Teacher> Teachers { get; set; } = null!;
         public DbSet<AccessCode> AccessCodes { get; set; } = null!;
         public DbSet<Result> Results { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Teacher>(entity =>
-            {
-                entity.ToTable("Teachers");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Login).IsRequired().HasMaxLength(200);
-                entity.HasIndex(e => e.Login).IsUnique();
-                entity.Property(e => e.PasswordHash).IsRequired();
-            });
 
             modelBuilder.Entity<AccessCode>(entity =>
             {

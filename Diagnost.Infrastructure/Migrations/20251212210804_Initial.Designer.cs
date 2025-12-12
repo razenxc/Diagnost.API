@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Diagnost.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251124182932_Initial")]
+    [Migration("20251212210804_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,43 +25,7 @@ namespace Diagnost.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Diagnost.Domain.Models.Result", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("AverageLatency")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("Errors")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("StandardDeviation")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("StudentName")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("character varying(300)");
-
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("SuccessfullClicks")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("Results", (string)null);
-                });
-
-            modelBuilder.Entity("Diagnost.Domain.Models.Session", b =>
+            modelBuilder.Entity("Diagnost.Domain.Models.AccessCode", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,43 +42,109 @@ namespace Diagnost.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("TeacherId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("TestType")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.HasIndex("TeacherId");
-
                     b.ToTable("Sessions", (string)null);
                 });
 
-            modelBuilder.Entity("Diagnost.Domain.Models.Teacher", b =>
+            modelBuilder.Entity("Diagnost.Domain.Models.Result", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<Guid>("AccessCodeId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Login")
+                    b.Property<string>("Gender")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Group")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<double>("PV2_3Smth1")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("PV2_ErrorsFalseAlarm")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PV2_ErrorsMissed")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PV2_ErrorsWrongButton")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("PV2_StdDev_ms")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("PZMRChtoToTam1")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("PZMRSmth2")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("PZMR_ErrorsTotal")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PZMR_SuccessfulClicks")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SportQualification")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("SportType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("StudentFullName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<double>("UFPSmth1")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("UFP_ErrorsFalseAlarm")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UFP_ErrorsMissed")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UFP_ErrorsWrongButton")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UFP_MinExposure_ms")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("UFP_StdDev_ms")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("UFP_TimeTillMinExp_s")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("UFP_TotalTime_s")
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Login")
-                        .IsUnique();
+                    b.HasIndex("AccessCodeId");
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Results", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -315,24 +345,13 @@ namespace Diagnost.Infrastructure.Migrations
 
             modelBuilder.Entity("Diagnost.Domain.Models.Result", b =>
                 {
-                    b.HasOne("Diagnost.Domain.Models.Session", "Session")
+                    b.HasOne("Diagnost.Domain.Models.AccessCode", "AccessCode")
                         .WithMany()
-                        .HasForeignKey("SessionId")
+                        .HasForeignKey("AccessCodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Session");
-                });
-
-            modelBuilder.Entity("Diagnost.Domain.Models.Session", b =>
-                {
-                    b.HasOne("Diagnost.Domain.Models.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Teacher");
+                    b.Navigation("AccessCode");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
