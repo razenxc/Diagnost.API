@@ -52,16 +52,17 @@ namespace Diagnost.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teachers",
+                name: "Sessions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Login = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false)
+                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.PrimaryKey("PK_Sessions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,46 +172,42 @@ namespace Diagnost.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sessions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    TestType = table.Column<int>(type: "integer", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sessions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Sessions_Teachers_TeacherId",
-                        column: x => x.TeacherId,
-                        principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Results",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    SessionId = table.Column<Guid>(type: "uuid", nullable: false),
-                    StudentName = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
-                    SuccessfullClicks = table.Column<int>(type: "integer", nullable: false),
-                    Errors = table.Column<int>(type: "integer", nullable: false),
-                    AverageLatency = table.Column<double>(type: "double precision", nullable: false),
-                    StandardDeviation = table.Column<double>(type: "double precision", nullable: false),
-                    SubmittedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AccessCodeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StudentFullName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    SportType = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    SportQualification = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Group = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Gender = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    SubmittedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    PZMRChtoToTam1 = table.Column<double>(type: "double precision", nullable: false),
+                    PZMRSmth2 = table.Column<double>(type: "double precision", nullable: false),
+                    PZMR_ErrorsTotal = table.Column<int>(type: "integer", nullable: false),
+                    PZMR_SuccessfulClicks = table.Column<int>(type: "integer", nullable: false),
+                    PV2_3Smth1 = table.Column<double>(type: "double precision", nullable: false),
+                    PV2_StdDev_ms = table.Column<double>(type: "double precision", nullable: false),
+                    PV2_ErrorsMissed = table.Column<int>(type: "integer", nullable: false),
+                    PV2_ErrorsWrongButton = table.Column<int>(type: "integer", nullable: false),
+                    PV2_ErrorsFalseAlarm = table.Column<int>(type: "integer", nullable: false),
+                    UFPSmth1 = table.Column<double>(type: "double precision", nullable: false),
+                    UFP_StdDev_ms = table.Column<double>(type: "double precision", nullable: false),
+                    UFP_MinExposure_ms = table.Column<int>(type: "integer", nullable: false),
+                    UFP_TotalTime_s = table.Column<double>(type: "double precision", nullable: false),
+                    UFP_TimeTillMinExp_s = table.Column<double>(type: "double precision", nullable: false),
+                    UFP_ErrorsMissed = table.Column<int>(type: "integer", nullable: false),
+                    UFP_ErrorsWrongButton = table.Column<int>(type: "integer", nullable: false),
+                    UFP_ErrorsFalseAlarm = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Results", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Results_Sessions_SessionId",
-                        column: x => x.SessionId,
+                        name: "FK_Results_Sessions_AccessCodeId",
+                        column: x => x.AccessCodeId,
                         principalTable: "Sessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -254,25 +251,14 @@ namespace Diagnost.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Results_SessionId",
+                name: "IX_Results_AccessCodeId",
                 table: "Results",
-                column: "SessionId");
+                column: "AccessCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_Code",
                 table: "Sessions",
                 column: "Code",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sessions_TeacherId",
-                table: "Sessions",
-                column: "TeacherId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teachers_Login",
-                table: "Teachers",
-                column: "Login",
                 unique: true);
         }
 
@@ -305,9 +291,6 @@ namespace Diagnost.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sessions");
-
-            migrationBuilder.DropTable(
-                name: "Teachers");
         }
     }
 }
