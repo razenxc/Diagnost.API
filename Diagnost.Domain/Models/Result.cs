@@ -5,7 +5,7 @@ namespace Diagnost.Domain.Models
     public enum ResultType
     {
         PZMR,
-        PV2,
+        PV2_3,
         UFP
     }
 
@@ -17,14 +17,12 @@ namespace Diagnost.Domain.Models
         public AccessCode? AccessCode { get; set; }
 
         // <--- User Info--->
-        public string StudentFirstName { get; set; } = string.Empty;
-        public string StudentLastName { get; set; } = string.Empty;
-        public string StudentPapaName { get; set; } = string.Empty;
+        public string StudentFullName { get; set; } = string.Empty;
         public string SportType { get; set; } = string.Empty;
         public string SportQualification { get; set; } = string.Empty;
         public string Group { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
-        public DateTime TestDate { get; set; } = DateTime.Now;
+        public DateTime SubmittedAt { get; set; } = DateTime.Now;
         
         // --- ТЕСТ 1 (ПЗМР) ---
         public double PZMRLatet { get; set; }      // Середня латентність

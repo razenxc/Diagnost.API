@@ -50,23 +50,17 @@ namespace Diagnost.Infrastructure
                       .HasMaxLength(20);
                 entity.Property(e => e.SubmittedAt)
                       .IsRequired();
-                entity.Property(e => e.PZMRChtoToTam1).IsRequired();
-                entity.Property(e => e.PZMRSmth2).IsRequired();
+                entity.Property(e => e.PZMRLatet).IsRequired();
+                entity.Property(e => e.PZMRvidhil).IsRequired();
                 entity.Property(e => e.PZMR_ErrorsTotal).IsRequired();
-                entity.Property(e => e.PZMR_SuccessfulClicks).IsRequired();
-                entity.Property(e => e.PV2_3Smth1).IsRequired();
+                entity.Property(e => e.PV2_3Latet).IsRequired();
                 entity.Property(e => e.PV2_StdDev_ms).IsRequired();
                 entity.Property(e => e.PV2_ErrorsMissed).IsRequired();
                 entity.Property(e => e.PV2_ErrorsWrongButton).IsRequired();
                 entity.Property(e => e.PV2_ErrorsFalseAlarm).IsRequired();
-                entity.Property(e => e.UFPSmth1).IsRequired();
+                entity.Property(e => e.UFPLatet).IsRequired();
                 entity.Property(e => e.UFP_StdDev_ms).IsRequired();
-                entity.Property(e => e.UFP_MinExposure_ms).IsRequired();
-                entity.Property(e => e.UFP_TotalTime_s).IsRequired();
-                entity.Property(e => e.UFP_TimeTillMinExp_s).IsRequired();
-                entity.Property(e => e.UFP_ErrorsMissed).IsRequired();
-                entity.Property(e => e.UFP_ErrorsWrongButton).IsRequired();
-                entity.Property(e => e.UFP_ErrorsFalseAlarm).IsRequired();
+                entity.Property(e => e.UFP_ErrorsTotal).IsRequired();
             });
         }
     }

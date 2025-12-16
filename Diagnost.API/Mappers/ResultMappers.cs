@@ -21,10 +21,9 @@ namespace Diagnost.API.Mappers
         {
             return new Result
             {
-                PZMRChtoToTam1 = r.PZMRChtoToTam1,
-                PZMRSmth2 = r.PZMRSmth2,
-                PZMR_ErrorsTotal = r.PZMR_ErrorsTotal,
-                PZMR_SuccessfulClicks = r.PZMR_SuccessfulClicks,
+                PZMRLatet = r.PZMRLatet,
+                PZMRvidhil = r.PZMRvidhil,
+                PZMR_ErrorsTotal = r.PZMR_ErrorsTotal
             };
         }
 
@@ -32,7 +31,7 @@ namespace Diagnost.API.Mappers
         {
             return new Result
             {
-                PV2_3Smth1 = r.PV2_3Smth1,
+                PV2_3Latet = r.PV2_3Latet,
                 PV2_StdDev_ms = r.PV2_StdDev_ms,
                 PV2_ErrorsMissed = r.PV2_ErrorsMissed,
                 PV2_ErrorsWrongButton = r.PV2_ErrorsWrongButton,
@@ -44,14 +43,9 @@ namespace Diagnost.API.Mappers
         {
             return new Result
             {
-                UFPSmth1 = r.UFPSmth1,
+                UFPLatet = r.UFPLatet,
                 UFP_StdDev_ms = r.UFP_StdDev_ms,
-                UFP_MinExposure_ms = r.UFP_MinExposure_ms,
-                UFP_TotalTime_s = r.UFP_TotalTime_s,
-                UFP_TimeTillMinExp_s = r.UFP_TimeTillMinExp_s,
-                UFP_ErrorsMissed = r.UFP_ErrorsMissed,
-                UFP_ErrorsWrongButton = r.UFP_ErrorsWrongButton,
-                UFP_ErrorsFalseAlarm = r.UFP_ErrorsFalseAlarm,
+                UFP_ErrorsTotal = r.UFP_ErrorsTotal,
             };
         }
 
@@ -66,23 +60,17 @@ namespace Diagnost.API.Mappers
                 r.Group,
                 r.Gender,
                 r.SubmittedAt,
-                r.PZMRChtoToTam1,
-                r.PZMRSmth2,
+                r.PZMRLatet,
+                r.PZMRvidhil,
                 r.PZMR_ErrorsTotal,
-                r.PZMR_SuccessfulClicks,
-                r.PV2_3Smth1,
+                r.PV2_3Latet,
                 r.PV2_StdDev_ms,
                 r.PV2_ErrorsMissed,
                 r.PV2_ErrorsWrongButton,
                 r.PV2_ErrorsFalseAlarm,
-                r.UFPSmth1,
+                r.UFPLatet,
                 r.UFP_StdDev_ms,
-                r.UFP_MinExposure_ms,
-                r.UFP_TotalTime_s,
-                r.UFP_TimeTillMinExp_s,
-                r.UFP_ErrorsMissed,
-                r.UFP_ErrorsWrongButton,
-                r.UFP_ErrorsFalseAlarm
+                r.UFP_ErrorsTotal
                 );
         }
     }

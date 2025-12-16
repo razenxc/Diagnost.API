@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Diagnost.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251212210804_Initial")]
+    [Migration("20251217203711_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Diagnost.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<double>("PV2_3Smth1")
+                    b.Property<double>("PV2_3Latet")
                         .HasColumnType("double precision");
 
                     b.Property<int>("PV2_ErrorsFalseAlarm")
@@ -80,23 +80,23 @@ namespace Diagnost.Infrastructure.Migrations
                     b.Property<int>("PV2_ErrorsMissed")
                         .HasColumnType("integer");
 
+                    b.Property<double>("PV2_ErrorsTotal")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("PV2_ErrorsWrongButton")
                         .HasColumnType("integer");
 
                     b.Property<double>("PV2_StdDev_ms")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("PZMRChtoToTam1")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("PZMRSmth2")
+                    b.Property<double>("PZMRLatet")
                         .HasColumnType("double precision");
 
                     b.Property<int>("PZMR_ErrorsTotal")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PZMR_SuccessfulClicks")
-                        .HasColumnType("integer");
+                    b.Property<double>("PZMRvidhil")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("SportQualification")
                         .IsRequired()
@@ -116,28 +116,13 @@ namespace Diagnost.Infrastructure.Migrations
                     b.Property<DateTime>("SubmittedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<double>("UFPSmth1")
+                    b.Property<double>("UFPLatet")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("UFP_ErrorsFalseAlarm")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UFP_ErrorsMissed")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UFP_ErrorsWrongButton")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UFP_MinExposure_ms")
-                        .HasColumnType("integer");
+                    b.Property<double>("UFP_ErrorsTotal")
+                        .HasColumnType("double precision");
 
                     b.Property<double>("UFP_StdDev_ms")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("UFP_TimeTillMinExp_s")
-                        .HasColumnType("double precision");
-
-                    b.Property<double>("UFP_TotalTime_s")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");

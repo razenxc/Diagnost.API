@@ -7,8 +7,8 @@ namespace Diagnost.Infrastructure.Services
     public class ResultService : IResultService
     {
         private readonly ApplicationDbContext _context;
-        public ResultService(ApplicationDbContext context) 
-        { 
+        public ResultService(ApplicationDbContext context)
+        {
             _context = context;
         }
 
@@ -19,7 +19,7 @@ namespace Diagnost.Infrastructure.Services
             if (accessCode == null)
             {
                 return (
-                    new Error(true, "Код доступу не існує"), 
+                    new Error(true, "Код доступу не існує"),
                     null
                     );
             }
@@ -71,14 +71,13 @@ namespace Diagnost.Infrastructure.Services
 
             if (testType == ResultType.PZMR)
             {
-                resultModel.PZMRChtoToTam1 = result.PZMRChtoToTam1;
-                resultModel.PZMRSmth2 = result.PZMRSmth2;
+                resultModel.PZMRLatet = result.PZMRLatet;
+                resultModel.PZMRvidhil = result.PZMRvidhil;
                 resultModel.PZMR_ErrorsTotal = result.PZMR_ErrorsTotal;
-                resultModel.PZMR_SuccessfulClicks = result.PZMR_SuccessfulClicks;
             }
-            else if (testType == ResultType.PV2)
+            else if (testType == ResultType.PV2_3)
             {
-                resultModel.PV2_3Smth1 = result.PV2_3Smth1;
+                resultModel.PV2_3Latet = result.PV2_3Latet;
                 resultModel.PV2_StdDev_ms = result.PV2_StdDev_ms;
                 resultModel.PV2_ErrorsMissed = result.PV2_ErrorsMissed;
                 resultModel.PV2_ErrorsWrongButton = result.PV2_ErrorsWrongButton;
@@ -86,12 +85,9 @@ namespace Diagnost.Infrastructure.Services
             }
             else if (testType == ResultType.UFP)
             {
-                resultModel.UFP_MinExposure_ms = result.UFP_MinExposure_ms;
-                resultModel.UFP_TotalTime_s = result.UFP_TotalTime_s;
-                resultModel.UFP_TimeTillMinExp_s = result.UFP_TimeTillMinExp_s;
-                resultModel.UFP_ErrorsMissed = result.UFP_ErrorsMissed;
-                resultModel.UFP_ErrorsWrongButton = result.UFP_ErrorsWrongButton;
-                resultModel.UFP_ErrorsFalseAlarm = result.UFP_ErrorsFalseAlarm;
+                resultModel.UFPLatet = result.UFPLatet;
+                resultModel.UFP_StdDev_ms = result.UFP_StdDev_ms;
+                resultModel.UFP_ErrorsTotal = result.UFP_ErrorsTotal;
             }
             else
             {
@@ -124,7 +120,7 @@ namespace Diagnost.Infrastructure.Services
         public async Task<(Error, List<Result>?)> GetAsync()
         {
             List<Result> results = await _context.Results
-                .Include(r => r.AccessCode)    
+                .Include(r => r.AccessCode)
                 .ToListAsync();
 
             return (

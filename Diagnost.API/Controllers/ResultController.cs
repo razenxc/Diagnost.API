@@ -2,7 +2,6 @@
 using Diagnost.API.Mappers;
 using Diagnost.Domain.Interfaces;
 using Diagnost.Domain.Models;
-using Diagnost.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diagnost.API.Controllers
@@ -12,8 +11,6 @@ namespace Diagnost.API.Controllers
     public class ResultController : ControllerBase
     {
         private readonly IResultService _resultService;
-
-        // To Do : Implement ResultResponse contracts.
 
         public ResultController(IResultService resultService)
         {
@@ -49,7 +46,7 @@ namespace Diagnost.API.Controllers
         [HttpPut("PV2")]
         public async Task<ActionResult> PutPV2([FromBody] PV2ResultRequest request)
         {
-            (Error error, Result? result) = await _resultService.SaveTestAsync(request.ToPV2Result(), request.AccessCode, request.ResultId, ResultType.PV2);
+            (Error error, Result? result) = await _resultService.SaveTestAsync(request.ToPV2Result(), request.AccessCode, request.ResultId, ResultType.PV2_3);
             if (error.IsError)
             {
                 return BadRequest(error.Message);
