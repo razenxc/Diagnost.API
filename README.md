@@ -8,7 +8,7 @@ Follow these steps to get the project up and running.
 
 Create a `.env` file based on the provided example:
 
-```bashcp example.env .env
+```bashcp
 cp example.env .env
 ```
 
