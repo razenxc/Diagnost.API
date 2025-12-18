@@ -2,6 +2,7 @@
 using Diagnost.API.Mappers;
 using Diagnost.Domain.Interfaces;
 using Diagnost.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diagnost.API.Controllers
@@ -67,6 +68,7 @@ namespace Diagnost.API.Controllers
         }
 
         // Read All
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -79,6 +81,7 @@ namespace Diagnost.API.Controllers
         }
 
         // Read
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(long id)
         {
@@ -91,6 +94,7 @@ namespace Diagnost.API.Controllers
         }
 
         // Delete
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(long id)
         {

@@ -1,12 +1,13 @@
 using Diagnost.Domain;
 using Diagnost.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Diagnost.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AccessCodeController : ControllerBase
     {
         private readonly IAccessCodeService _accessCode;
