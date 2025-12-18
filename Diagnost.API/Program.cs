@@ -43,6 +43,8 @@ namespace Diagnost.API
             {
                 options.BearerTokenExpiration = TimeSpan.FromDays(30);
             });
+
+            builder.Services.AddCors();
             
             builder.Services.AddScoped<IAccessCodeService, AccessCodeService>();
             builder.Services.AddScoped<IResultService, ResultService>();
@@ -109,7 +111,12 @@ namespace Diagnost.API
             {
                 app.UseHttpsRedirection();
             }
-            
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseAuthorization();
 
             app.MapControllers();

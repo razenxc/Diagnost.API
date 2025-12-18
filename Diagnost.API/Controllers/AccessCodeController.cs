@@ -76,5 +76,17 @@ namespace Diagnost.API.Controllers
             }
             return Ok(accessCode);
         }
+
+        // Verify
+        [HttpGet("verify/{code}")]
+        public async Task<ActionResult> Verify([FromRoute] string code)
+        {
+            (Error error, bool isValid) = await _accessCode.VerifyAsync(code);
+            if (error.IsError)
+            {
+                BadRequest(error.Message);
+            }
+            return Ok(isValid);
+        }
     }
 }

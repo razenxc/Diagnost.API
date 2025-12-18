@@ -207,4 +207,39 @@ public class AccessCodeService : IAccessCodeService
             accessCode
             );
     }
+
+    // Verify
+    public async Task<(Error, bool)> VerifyAsync(string code)
+    {
+        AccessCode? accessCode;
+        try
+        {
+            accessCode = await _context.AccessCodes.FirstOrDefaultAsync(x => x.Code == code);
+        }
+        catch (Exception)
+        {
+            return (
+                new Error(true, "Помилка під час отримання коду доступу з бази даних!"),
+                false
+                );
+        }
+        if (accessCode == null)
+        {
+            return (
+                new Error(true, "Код доступу не знайдено!"),
+                false
+            );
+        }
+        if (!accessCode.IsActive)
+        {
+            return (
+                new Error(true, "Код доступу не активний!"),
+                false
+            );
+        }
+        return (
+            new Error(false),
+            true
+            );
+    }
 }

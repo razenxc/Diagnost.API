@@ -9,4 +9,5 @@ public interface IAccessCodeService
     Task<(Error, List<AccessCode>?)> GetAsync();
     Task<(Error, AccessCode?)> GetAsync(string accessCode);
     Task<(Error, AccessCode?)> Revoke(string code);
+    Task<(Error, bool)> VerifyAsync(string code);
 }
