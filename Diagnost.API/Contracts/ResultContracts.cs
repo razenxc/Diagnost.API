@@ -24,6 +24,7 @@
 
         double PV2_3Latet,
         double PV2_StdDev_ms,
+        double PV2_ErrorsTotal,
         int PV2_ErrorsMissed,
         int PV2_ErrorsWrongButton,
         int PV2_ErrorsFalseAlarm
@@ -54,6 +55,7 @@
 
         double PV2_3Latet,
         double PV2_StdDev_ms,
+        double PV2_ErrorsTotal,
         int PV2_ErrorsMissed,
         int PV2_ErrorsWrongButton,
         int PV2_ErrorsFalseAlarm,

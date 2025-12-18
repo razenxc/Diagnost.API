@@ -79,6 +79,7 @@ namespace Diagnost.Infrastructure.Services
             {
                 resultModel.PV2_3Latet = result.PV2_3Latet;
                 resultModel.PV2_StdDev_ms = result.PV2_StdDev_ms;
+                resultModel.PV2_ErrorsTotal = result.PV2_ErrorsTotal;
                 resultModel.PV2_ErrorsMissed = result.PV2_ErrorsMissed;
                 resultModel.PV2_ErrorsWrongButton = result.PV2_ErrorsWrongButton;
                 resultModel.PV2_ErrorsFalseAlarm = result.PV2_ErrorsFalseAlarm;

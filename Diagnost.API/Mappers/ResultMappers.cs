@@ -33,6 +33,7 @@ namespace Diagnost.API.Mappers
             {
                 PV2_3Latet = r.PV2_3Latet,
                 PV2_StdDev_ms = r.PV2_StdDev_ms,
+                PV2_ErrorsTotal = r.PV2_ErrorsTotal,
                 PV2_ErrorsMissed = r.PV2_ErrorsMissed,
                 PV2_ErrorsWrongButton = r.PV2_ErrorsWrongButton,
                 PV2_ErrorsFalseAlarm = r.PV2_ErrorsFalseAlarm,
@@ -65,6 +66,7 @@ namespace Diagnost.API.Mappers
                 r.PZMR_ErrorsTotal,
                 r.PV2_3Latet,
                 r.PV2_StdDev_ms,
+                r.PV2_ErrorsTotal,
                 r.PV2_ErrorsMissed,
                 r.PV2_ErrorsWrongButton,
                 r.PV2_ErrorsFalseAlarm,
