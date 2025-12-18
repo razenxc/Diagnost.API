@@ -113,15 +113,14 @@ namespace Diagnost.API
             }
 
             app.UseCors(x => x
-                .AllowAnyOrigin()
+                .WithOrigins("http://localhost:7169/", "https://localhost:7169/")
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseAuthorization();
 
             app.MapControllers();
-
-            app.MapIdentityApi<IdentityUser>();
 
             app.Run();
         }
