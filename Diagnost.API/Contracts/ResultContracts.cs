@@ -18,7 +18,7 @@
         int PZMR_ErrorsTotal
         );
 
-    public record PV2ResultRequest(
+    public record PV2_3ResultRequest(
         string AccessCode,
         long ResultId,
 

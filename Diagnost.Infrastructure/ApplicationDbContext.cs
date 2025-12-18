@@ -38,16 +38,16 @@ namespace Diagnost.Infrastructure
                       .OnDelete(DeleteBehavior.Cascade); // If AccessCode is deleted, delete related Results
                 entity.Property(e => e.StudentFullName)
                       .IsRequired()
-                      .HasMaxLength(150);
+                      .HasMaxLength(250);
                 entity.Property(e => e.Group)
                       .IsRequired()
                       .HasMaxLength(50);
                 entity.Property(e => e.SportType)
-                      .HasMaxLength(100);
+                      .HasMaxLength(250);
                 entity.Property(e => e.SportQualification)
                       .HasMaxLength(100);
                 entity.Property(e => e.Gender)
-                      .HasMaxLength(20);
+                      .HasMaxLength(50);
                 entity.Property(e => e.SubmittedAt)
                       .IsRequired();
                 entity.Property(e => e.PZMRLatet).IsRequired();

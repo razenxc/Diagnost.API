@@ -27,7 +27,7 @@ namespace Diagnost.API.Mappers
             };
         }
 
-        public static Result ToPV2Result(this PV2ResultRequest r)
+        public static Result ToPV2_3Result(this PV2_3ResultRequest r)
         {
             return new Result
             {

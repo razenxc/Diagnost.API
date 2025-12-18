@@ -43,10 +43,10 @@ namespace Diagnost.API.Controllers
         }
 
         // Update PV2
-        [HttpPut("PV2")]
-        public async Task<ActionResult> PutPV2([FromBody] PV2ResultRequest request)
+        [HttpPut("PV2_3")]
+        public async Task<ActionResult> PutPV2_3([FromBody] PV2_3ResultRequest request)
         {
-            (Error error, Result? result) = await _resultService.SaveTestAsync(request.ToPV2Result(), request.AccessCode, request.ResultId, ResultType.PV2_3);
+            (Error error, Result? result) = await _resultService.SaveTestAsync(request.ToPV2_3Result(), request.AccessCode, request.ResultId, ResultType.PV2_3);
             if (error.IsError)
             {
                 return BadRequest(error.Message);
