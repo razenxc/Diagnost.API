@@ -79,6 +79,7 @@ namespace Diagnost.API.Controllers
         }
 
         // Verify
+        [AllowAnonymous]
         [HttpGet("verify/{code}")]
         public async Task<ActionResult> Verify([FromRoute] string code)
         {

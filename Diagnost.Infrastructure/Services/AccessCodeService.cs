@@ -91,6 +91,8 @@ public class AccessCodeService : IAccessCodeService
     // Read
     public async Task<(Error, AccessCode?)> GetAsync(string accessCode)
     {
+        accessCode = accessCode.ToUpper();
+
         AccessCode? accessCodeModel;
 
         try
@@ -122,6 +124,8 @@ public class AccessCodeService : IAccessCodeService
     // Update
     public async Task<(Error, AccessCode?)> Revoke(string code)
     {
+        code = code.ToUpper();
+
         AccessCode? accessCode;
 
         try
@@ -167,6 +171,8 @@ public class AccessCodeService : IAccessCodeService
     // Delete
     public async Task<(Error, AccessCode?)> DeleteAsync(string code)
     {
+        code = code.ToUpper();
+
         AccessCode? accessCode;
 
         try
@@ -211,6 +217,8 @@ public class AccessCodeService : IAccessCodeService
     // Verify
     public async Task<(Error, bool)> VerifyAsync(string code)
     {
+        code = code.ToUpper();
+
         AccessCode? accessCode;
         try
         {
