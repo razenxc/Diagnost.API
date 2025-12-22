@@ -12,6 +12,7 @@ services:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=diagnost;Username=postgres;Password=postgres
       - Diagnost__DefaultAdminEmail=${DEFAULT_ADMIN_ACCOUNT_EMAIL}
       - Diagnost__DefaultAdminPassword=${DEFAULT_ADMIN_ACCOUNT_PASSWORD}
+      - DatabaseProvider=PostgreSQL
     ports:
       - "8080:80"
 

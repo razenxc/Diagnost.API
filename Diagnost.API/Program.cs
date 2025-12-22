@@ -19,8 +19,16 @@ namespace Diagnost.API
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
-            );
+            {
+                if (builder.Configuration["DatabaseProvider"] == "MSSQL")
+                {
+                    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                }
+                else if (builder.Configuration["DatabaseProvider"] == "PostgreSQL")
+                {
+                    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+                }
+            });
 
             builder.Services.AddAuthorization();
 
@@ -39,9 +47,10 @@ namespace Diagnost.API
                 options.User.RequireUniqueEmail = false;
             });
 
-            builder.Services.Configure<BearerTokenOptions>(IdentityConstants.BearerScheme, options =>
+            builder.Services.ConfigureApplicationCookie(options =>
             {
-                options.BearerTokenExpiration = TimeSpan.FromDays(30);
+                options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                options.SlidingExpiration = true;
             });
 
             builder.Services.AddCors();
@@ -100,11 +109,10 @@ namespace Diagnost.API
             }
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{}
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             // Do not force HTTPS in Development container where certs are not configured
             if (!app.Environment.IsDevelopment())
@@ -113,7 +121,7 @@ namespace Diagnost.API
             }
 
             app.UseCors(x => x
-                .WithOrigins("http://localhost:7169/", "https://localhost:7169/")
+                .WithOrigins("http://localhost:7169", "https://localhost:7169", "http://diagnost.runasp.net", "https://diagnost.runasp.net")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
