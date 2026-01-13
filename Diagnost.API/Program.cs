@@ -121,7 +121,7 @@ namespace Diagnost.API
             }
 
             app.UseCors(x => x
-                .WithOrigins("http://localhost:7169", "https://localhost:7169", "http://diagnost.runasp.net", "https://diagnost.runasp.net")
+                .WithOrigins("http://localhost:7169", "https://localhost:7169")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());

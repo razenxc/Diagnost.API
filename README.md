@@ -21,5 +21,5 @@ Start the application in detached mode:
 Bash
 
 ```
-docker-compose up -d
+docker-compose up --build -d
 ```
